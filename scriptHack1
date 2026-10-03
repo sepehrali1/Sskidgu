@@ -1,0 +1,343 @@
+-- hello skid
+
+local player = game:GetService("Players").LocalPlayer
+local UIS = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+
+local guiName = "HackKeypadPanelGUI_V8_6_Turbo"
+local targetGui = game:GetService("CoreGui")
+pcall(function() 
+    if not targetGui:FindFirstChild("RobloxGui") then targetGui = player:WaitForChild("PlayerGui") end
+end)
+
+if targetGui:FindFirstChild(guiName) then
+    targetGui[guiName]:Destroy()
+end
+
+-- ================== ساخت GUI ==================
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = guiName
+ScreenGui.Parent = targetGui
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 550, 0, 400) 
+MainFrame.Position = UDim2.new(0.5, -275, 0.5, -200)
+MainFrame.BackgroundColor3 = Color3.fromRGB(5, 10, 5) 
+MainFrame.BorderSizePixel = 2
+MainFrame.BorderColor3 = Color3.fromRGB(0, 255, 0)
+MainFrame.Parent = ScreenGui
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, -40, 0, 30)
+Title.Position = UDim2.new(0, 10, 0, 5)
+Title.BackgroundTransparency = 1
+Title.Text = "Code Door HACK By C00LHACK"
+Title.TextColor3 = Color3.fromRGB(0, 255, 0)
+Title.Font = Enum.Font.Code
+Title.TextSize = 20
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = MainFrame
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -35, 0, 5)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(20, 0, 0)
+CloseBtn.TextColor3 = Color3.fromRGB(255, 0, 0)
+CloseBtn.Text = "X"
+CloseBtn.Font = Enum.Font.Code
+CloseBtn.TextSize = 20
+CloseBtn.BorderSizePixel = 1
+CloseBtn.BorderColor3 = Color3.fromRGB(255, 0, 0)
+CloseBtn.Parent = MainFrame
+
+-- پنل اسکرول پیشرفته برای لاگ‌ها
+local TerminalScroll = Instance.new("ScrollingFrame")
+TerminalScroll.Name = "TerminalScroll"
+TerminalScroll.Size = UDim2.new(1, -20, 1, -100) 
+TerminalScroll.Position = UDim2.new(0, 10, 0, 40)
+TerminalScroll.BackgroundColor3 = Color3.fromRGB(2, 6, 2)
+TerminalScroll.BorderSizePixel = 1
+TerminalScroll.BorderColor3 = Color3.fromRGB(0, 150, 0)
+TerminalScroll.ScrollBarThickness = 8
+TerminalScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+TerminalScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+TerminalScroll.Parent = MainFrame
+
+-- لیست چیدمان عمودی برای مدیریت لاگ‌ها
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 4) 
+UIListLayout.Parent = TerminalScroll
+
+-- سیستم اسکرول خودکار هوشمند
+UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    TerminalScroll.CanvasPosition = Vector2.new(0, UIListLayout.AbsoluteContentSize.Y)
+end)
+
+local HackBtn = Instance.new("TextButton")
+HackBtn.Size = UDim2.new(1, -20, 0, 45)
+HackBtn.Position = UDim2.new(0, 10, 1, -55)
+HackBtn.BackgroundColor3 = Color3.fromRGB(0, 40, 0)
+HackBtn.TextColor3 = Color3.fromRGB(0, 255, 0)
+HackBtn.Text = "HACK"
+HackBtn.Font = Enum.Font.Code
+HackBtn.TextSize = 20
+HackBtn.BorderSizePixel = 1
+HackBtn.BorderColor3 = Color3.fromRGB(0, 255, 0)
+HackBtn.Parent = MainFrame
+
+-- ================== سیستم DRAG ==================
+local function dragify(Frame)
+    local dragToggle, dragInput, dragStart, startPos
+    local function updateInput(input)
+        local Delta = input.Position - dragStart
+        local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
+        TweenService:Create(Frame, TweenInfo.new(0.075), {Position = Position}):Play() -- سرعت حرکت منو ۲ برابر شد (۰.۱۵ به ۰.۰۷۵)
+    end
+    Frame.InputBegan:Connect(function(input)
+        if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UIS:GetFocusedTextBox() == nil then
+            dragToggle = true
+            dragStart = input.Position
+            startPos = Frame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then dragToggle = false end
+            end)
+        end
+    end)
+    Frame.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then dragInput = input end
+    end)
+    UIS.InputChanged:Connect(function(input)
+        if input == dragInput and dragToggle then updateInput(input) end
+    end)
+end
+dragify(MainFrame)
+
+CloseBtn.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
+
+-- ================== توابع اینتراکت و لاگ‌ پیشرفته ==================
+local function addLog(text)
+    local LogLabel = Instance.new("TextLabel")
+    LogLabel.Size = UDim2.new(1, -15, 0, 0) 
+    LogLabel.BackgroundTransparency = 1
+    LogLabel.Text = "> " .. text
+    LogLabel.TextColor3 = Color3.fromRGB(0, 200, 0)
+    LogLabel.Font = Enum.Font.Code
+    LogLabel.TextSize = 14
+    LogLabel.TextXAlignment = Enum.TextXAlignment.Left
+    LogLabel.TextYAlignment = Enum.TextYAlignment.Top
+    LogLabel.TextWrapped = true 
+    LogLabel.AutomaticSize = Enum.AutomaticSize.Y 
+    LogLabel.Parent = TerminalScroll
+end
+
+local function clearLogs()
+    for _, child in pairs(TerminalScroll:GetChildren()) do
+        if child:IsA("TextLabel") then
+            child:Destroy()
+        end
+    end
+end
+
+addLog("V8 Online. Turbo Scanner Mode Engaged...")
+
+local function interactWithTarget(targetObj)
+    local char = player.Character
+    if not char then return false end
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    local actionTaken = false
+
+    local clickDetector = targetObj:IsA("ClickDetector") and targetObj or targetObj:FindFirstChildWhichIsA("ClickDetector")
+    local touchTransmitter = targetObj:IsA("TouchTransmitter") and targetObj or targetObj:FindFirstChildWhichIsA("TouchTransmitter")
+    local proximityPrompt = targetObj:IsA("ProximityPrompt") and targetObj or targetObj:FindFirstChildWhichIsA("ProximityPrompt")
+
+    if clickDetector and fireclickdetector then
+        fireclickdetector(clickDetector)
+        actionTaken = true
+    elseif proximityPrompt and fireproximityprompt then
+        fireproximityprompt(proximityPrompt)
+        actionTaken = true
+    elseif touchTransmitter and hrp then
+        local parentPart = touchTransmitter.Parent or targetObj
+        if parentPart:IsA("BasePart") then
+            if firetouchinterest then
+                firetouchinterest(hrp, parentPart, 0)
+                task.wait(0.025) -- سرعت تاچ ۲ برابر شد (۰.۰۵ به ۰.۰۲۵)
+                firetouchinterest(hrp, parentPart, 1)
+                actionTaken = true
+            else
+                parentPart.CFrame = hrp.CFrame
+                actionTaken = true
+            end
+        end
+    end
+    
+    return actionTaken
+end
+
+-- ================== هوش مصنوعی حل ریاضی ==================
+local function solveMathExpression(exprText)
+    local cleaned = exprText:gsub("%?", ""):gsub(" ", ""):gsub("=", "")
+    local leftNum, op, rightNum = cleaned:match("(%d+)([+%-%*/])(%d+)")
+    
+    if leftNum and op and rightNum then
+        local n1 = tonumber(leftNum)
+        local n2 = tonumber(rightNum)
+        if op == "+" then return n1 + n2 end
+        if op == "-" then return n1 - n2 end
+        if op == "*" then return n1 * n2 end
+        if op == "/" then return n2 ~= 0 and n1 / n2 or 0 end
+    end
+    
+    local func, err = loadstring("return " .. cleaned)
+    if func then
+        local success, res = pcall(func)
+        if success and type(res) == "number" then
+            return math.floor(res)
+        end
+    end
+    return nil
+end
+
+-- ================== منطق هک و دکمه کنسل ==================
+local isScanning = false 
+
+HackBtn.MouseButton1Click:Connect(function()
+    if isScanning then
+        isScanning = false
+        addLog("SYSTEM: SCAN ABORTED!")
+        HackBtn.Text = "HACK"
+        HackBtn.BackgroundColor3 = Color3.fromRGB(0, 40, 0)
+        return
+    end
+
+    isScanning = true
+    clearLogs() 
+    HackBtn.Text = "SCANNING... (Press To Stop)"
+    HackBtn.BackgroundColor3 = Color3.fromRGB(80, 0, 0) 
+    
+    local fakeLogs = {
+        "Initializing V8 Deep Text Scanner...",
+        "Searching Workspace & SurfaceGuis for math questions...",
+        "Executing smart solver & physical clickers..."
+    }
+    
+    for _, logText in ipairs(fakeLogs) do
+        if not isScanning then return end 
+        addLog(logText)
+        task.wait(0.075) -- لود شدن لاگ‌های اولیه ۲ برابر سریع‌تر شد (۰.۱۵ به ۰.۰۷۵)
+    end
+
+    local foundActions = 0
+
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if not isScanning then break end 
+
+        if obj:IsA("TextLabel") then
+            local textStr = obj.Text or ""
+            if textStr:find("%+") or textStr:find("%-") or textStr:find("%*") or textStr:find("%?") then
+                local answer = solveMathExpression(textStr)
+                
+                if answer then
+                    local ansStr = tostring(answer)
+                    addLog("AI Solved: [" .. textStr .. "] = " .. ansStr)
+                    
+                    local keypadRoot = obj
+                    while keypadRoot.Parent and keypadRoot.Parent ~= workspace do
+                        keypadRoot = keypadRoot.Parent
+                    end
+                    
+                    for i = 1, #ansStr do
+                        if not isScanning then break end
+                        local digitChar = string.sub(ansStr, i, i)
+                        local fired = false
+                        
+                        for _, desc in pairs(keypadRoot:GetDescendants()) do
+                            if desc:IsA("BasePart") or desc:IsA("Model") or desc:IsA("Part") then
+                                local dName = string.lower(desc.Name)
+                                if dName == "b" .. digitChar or dName == digitChar then
+                                    local detector = desc:IsA("ClickDetector") and desc or desc:FindFirstChildWhichIsA("ClickDetector")
+                                    if detector then
+                                        interactWithTarget(detector)
+                                        fired = true
+                                        break
+                                    end
+                                end
+                            end
+                        end
+                        if fired then task.wait(0.125) end -- تاخیر بین فشردن دکمه‌های ریاضی ۲ برابر سریع‌تر شد (۰.۲۵ به ۰.۱۲۵)
+                    end
+                    
+                    if not isScanning then break end
+                    task.wait(0.1) -- تاخیر قبل از زدن اینتر ریاضی ۲ برابر سریع‌تر شد (۰.۲ به ۰.۱)
+                    for _, desc in pairs(keypadRoot:GetDescendants()) do
+                        if string.lower(desc.Name) == "enter" then
+                            local detector = desc:IsA("ClickDetector") and desc or desc:FindFirstChildWhichIsA("ClickDetector")
+                            if detector then
+                                interactWithTarget(detector)
+                                break
+                            end
+                        end
+                    end
+                    addLog("AI ENTER sequence fired!")
+                    foundActions = foundActions + 1
+                end
+            end
+        end
+        
+local nameLower = string.lower(obj.Name)
+
+-- بررسی هر دو حالت به صورت کامل و فقط با حروف کوچک
+if nameLower == "open" or nameLower == "openbutton" then
+    if interactWithTarget(obj) then
+        addLog("Fired Physical Open")
+        foundActions = foundActions + 1
+    end
+end
+        
+        if nameLower == "code" and (obj:IsA("StringValue") or obj:IsA("IntValue") or obj:IsA("NumberValue")) then
+            local passcode = tostring(obj.Value)
+            addLog("Physical Code Found: [" .. passcode .. "]")
+            
+            local doorRoot = obj
+            while doorRoot.Parent and doorRoot.Parent ~= workspace do
+                doorRoot = doorRoot.Parent
+            end
+            
+            for i = 1, #passcode do
+                if not isScanning then break end
+                local charDigit = string.sub(passcode, i, i)
+                local digitFired = false
+                for _, desc in pairs(doorRoot:GetDescendants()) do
+                    if not (desc:IsA("GuiObject") or desc:IsA("TextButton")) and desc.Name == charDigit then
+                        if desc:FindFirstChildWhichIsA("ClickDetector") or desc:FindFirstChildWhichIsA("TouchTransmitter") then
+                            interactWithTarget(desc)
+                            digitFired = true
+                            break
+                        end
+                    end
+                end
+                if digitFired then task.wait(0.15) end -- تاخیر بین دکمه‌های کد فیزیکی ۲ برابر سریع‌تر شد (۰.۳ به ۰.۱۵)
+            end
+            
+            if not isScanning then break end
+            task.wait(0.1) -- تاخیر قبل از زدن اینتر کد فیزیکی ۲ برابر سریع‌تر شد (۰.۲ به ۰.۱)
+            for _, desc in pairs(doorRoot:GetDescendants()) do
+                if not (desc:IsA("GuiObject") or desc:IsA("TextButton")) and string.lower(desc.Name) == "enter" then
+                    interactWithTarget(desc)
+                    break
+                end
+            end
+            addLog("Physical ENTER fired!")
+            foundActions = foundActions + 1
+        end
+    end
+    
+    if isScanning then
+        isScanning = false
+        addLog("STATUS: Done. Handled triggers: " .. foundActions)
+        HackBtn.Text = "HACK"
+        HackBtn.BackgroundColor3 = Color3.fromRGB(0, 40, 0)
+    end
+end)
