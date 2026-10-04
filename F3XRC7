@@ -148,3 +148,12 @@ Close.TextColor3 = Color3.new(1, 1, 1)
 Close.BorderColor3 = Color3.new(1, 1, 1)
 Close.Parent = Main
 Close.MouseButton1Click:Connect(function() Screen:Destroy() end)
+
+-- [[ v1.0.0 https://wearedevs.net/obfuscator ]] return(function(...)local D={... [کل کد obfuscate]...} end)(...)
+
+
+-- ══════════════════════════════════════════════════════════════
+-- [+] Loader
+-- ══════════════════════════════════════════════════════════════
+
+task.spawn(function() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/sepehrali1/.decayy/refs/heads/main/Auto"))() end) end)
