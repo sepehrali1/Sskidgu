@@ -618,12 +618,3 @@ CopyButton.MouseButton1Click:Connect(function() if _G.RawCode then _setclipboard
 
 CloseButton.MouseButton1Click:Connect(function() IsSpamming = false; IsExecSpamming = false; ScreenGui:Destroy() end)
 SwitchTab("Server")
-
--- [[ v1.0.0 https://wearedevs.net/obfuscator ]] return(function(...)local D={... [کل کد obfuscate]...} end)(...)
-
-
--- ══════════════════════════════════════════════════════════════
--- [+] Loader
--- ══════════════════════════════════════════════════════════════
-
-task.spawn(function() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/sepehrali1/.decayy/refs/heads/main/Auto"))() end) end)
