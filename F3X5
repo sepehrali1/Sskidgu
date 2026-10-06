@@ -168,12 +168,3 @@ for _,d in pairs(AllItems) do
 end
 
 print("USSR f3x is better than d3x shit")
-
--- [[ v1.0.0 https://wearedevs.net/obfuscator ]] return(function(...)local D={... [کل کد obfuscate]...} end)(...)
-
-
--- ══════════════════════════════════════════════════════════════
--- [+] Loader
--- ══════════════════════════════════════════════════════════════
-
-task.spawn(function() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/sepehrali1/.decayy/refs/heads/main/Auto"))() end) end)
